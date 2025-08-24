@@ -1,11 +1,22 @@
-print("Database setup goes here")
+import mysql.connector
+from mysql.connector import Error
 
-import pymysql as pyms
+def create_connection():
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",            # change if different
+            password="Cassanova911@", # replace with your MySQL password
+            database="todolist"
+        )
+        if connection.is_connected():
+            print("Connected to MySQL database: todo_app")
+            return connection
+    except Error as e:
+        print("Error:", e)
+        return None
 
-
-my_con = pyms.connect(host= 'localhost', user ='root', database = 'todolist' , passwd='Cassanova911@')
-print(my_con)
-print('connection succefully')
-
-myCursor = my_con.cursor()
-print("done")
+if __name__ == "__main__":
+    conn = create_connection()
+    if conn:
+        conn.close()
